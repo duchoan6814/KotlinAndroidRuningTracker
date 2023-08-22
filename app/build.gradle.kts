@@ -1,12 +1,19 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
 }
 
+val localProperties = Properties().apply {
+    load(FileInputStream(rootProject.file("local.properties")))
+}
+
 android {
     namespace = "com.hoantruong6814.runingtracker"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.hoantruong6814.runingtracker"
@@ -18,7 +25,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+
     buildTypes {
+
+        debug {
+            resValue("string", "google_map_key", localProperties["googleMapAPIKey"] as String)
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -28,12 +41,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
+
 }
 
 dependencies {
