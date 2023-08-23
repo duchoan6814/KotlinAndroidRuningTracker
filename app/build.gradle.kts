@@ -4,7 +4,9 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
+
 }
 
 val localProperties = Properties().apply {
@@ -67,7 +69,7 @@ dependencies {
 
     // Room
     implementation("androidx.room:room-runtime:2.5.2")
-    ksp("androidx.room:room-compiler:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
 
     // Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.5.2")
@@ -86,7 +88,7 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
-    ksp("com.github.bumptech.glide:compiler:4.12.0")
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
 
 
     // Google Maps Location Services
@@ -94,13 +96,21 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.1.0")
 
     // Dagger Core
-    implementation("com.google.dagger:dagger:2.28.3")
-    ksp("com.google.dagger:dagger-compiler:2.25.2")
+    implementation("com.google.dagger:dagger:2.25.4")
+    kapt("com.google.dagger:dagger-compiler:2.25.2")
 
     // Dagger Android
     api("com.google.dagger:dagger-android:2.28.1")
     api("com.google.dagger:dagger-android-support:2.28.1")
-    ksp("com.google.dagger:dagger-android-processor:2.23.2")
+    kapt("com.google.dagger:dagger-android-processor:2.23.2")
+
+    // Activity KTX for viewModels()
+    implementation("androidx.activity:activity-ktx:1.7.2")
+
+    //Dagger - Hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+
 
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
@@ -113,4 +123,8 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     implementation("android.arch.lifecycle:extensions:1.1.1")
+}
+
+kapt {
+    correctErrorTypes = true
 }
